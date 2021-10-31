@@ -3,6 +3,20 @@
 #include <ctime>
 #include "ParseFile.h"
 
+void 
+updateProgressCheckingFile(const int n_prevLine, const int n_curLine) 
+{
+    if (n_curLine == 0) {
+        printf("Check Line %d", n_curLine);
+        return;
+    }
+    //Смещение каретки
+    int numb_backspaces = std::to_string(n_prevLine).length();
+    for (int n_back = 0; n_back < numb_backspaces; n_back++)
+        printf("\b");
+    printf("%d", n_curLine); //! Перезапись в stdout номера строки, в которой ищем
+    return;
+}
 
 void
 parseFile(const std::string& filename,
@@ -27,11 +41,13 @@ parseFile(const std::string& filename,
     std::string time4parsedLines = ctime(&cur_time);
     time4parsedLines.pop_back();
     fprintf(file4write, "\n[%s] Start parsing %s\n", time4parsedLines.c_str(), filename.c_str());
+    printf("\n[%s] Start parsing %s\n", time4parsedLines.c_str(), filename.c_str());
     unsigned int nLine = 0;
+    updateProgressCheckingFile(nLine, 0);
     while (!logfile.eof()) {
         std::string cur_line;
-        std::getline(logfile, cur_line);    nLine++;
-        printf("Check Line %d in %s\n", nLine, filename.c_str());
+        std::getline(logfile, cur_line);    nLine++;    //! чтение строки
+        updateProgressCheckingFile(nLine-1, nLine);
         std::size_t pos_substr = cur_line.find(substr);
         while (pos_substr >= 0 && pos_substr <= cur_line.size()) {
             //printf("[line %d, pos %d] %s\n", nLine, pos_substr, cur_line.c_str());
@@ -43,6 +59,7 @@ parseFile(const std::string& filename,
     time4parsedLines = ctime(&cur_time);
     time4parsedLines.pop_back();
     fprintf(file4write, "[%s] End parsing %s\n", time4parsedLines.c_str(), filename.c_str());
+    printf("\n[%s] End parsing %s\n", time4parsedLines.c_str(), filename.c_str());
 
     //pass
 }
