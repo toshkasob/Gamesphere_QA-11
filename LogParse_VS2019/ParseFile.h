@@ -3,5 +3,9 @@
 #include <string>
 
 
-void parseFile(const std::string& filename, const std::string& substr) ;
+void 
+parseFile(const std::string& filename, 
+          const std::string& substr, 
+          const std::string& outpath
+         ) ;
 #endif // !H_PARSE_FILE

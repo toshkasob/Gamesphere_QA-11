@@ -25,10 +25,11 @@ int main (int argc, char *argv[]) {
 	clock_t t;
 	t = clock();
 
-    std::string path ;
-    std::string filename ;
-    std::string substr = "Error";
     std::string exe_name = argv[0];
+    std::string filename ;
+    std::string outpath = "./";
+    std::string path ;
+    std::string substr = "Error";
     // Разбор аргументов запуска
     for (int i_arg = 1; i_arg < argc; i_arg++)
     {
@@ -44,11 +45,19 @@ int main (int argc, char *argv[]) {
                 if (strcmp(&argv[i_arg][2], "dir") == NULL && argc >= i_arg + 1)
                 {
                     path = argv[++i_arg];
-                } 
+                    if (path[0] == '-') {
+                        printf("wrong arg after --dir\n");
+                        showInputArgs(argv[0]);
+                    }
+                }
                 else if (strcmp(&argv[i_arg][2], "file") == NULL && argc >= i_arg + 1)
                 {
                     filename = argv[++i_arg];
-                } 
+                    if (filename[0] == '-') {
+                        printf("wrong arg after --file\n");
+                        showInputArgs(argv[0]);
+                    }
+                }
                 //else if ((pch_eq = strstr(&argv[i_arg][2], "substr=")) != NULL)
                 //{
                 //    substr = pch_eq[7];
@@ -59,6 +68,12 @@ int main (int argc, char *argv[]) {
                     substr = std::string(argv[i_arg]).substr(2+nch_eq);
                     //substr = substr.substr(2+nch_eq);
                 } 
+                else if ((nch_eq = strspn(&argv[i_arg][2], "outpath=")) == strlen("outpath="))
+                {
+                    outpath.clear();
+                    outpath = std::string(argv[i_arg]).substr(2 + nch_eq);
+                    //outpath = outpath.substr(2+nch_eq);
+                }
                 else
                 {
                     printf("invalid options =(\n");
@@ -70,6 +85,10 @@ int main (int argc, char *argv[]) {
             case 'f':
             {
                 filename = argv[++i_arg];
+                if (filename[0] == '-') {
+                    printf("wrong arg after -f\n");
+                    showInputArgs(argv[0]);
+                }
                 break;
             }
             //case 's':
@@ -101,23 +120,23 @@ int main (int argc, char *argv[]) {
             if (!boost::filesystem::is_regular_file(*iter_dir))
                 continue;
             filename = boost::filesystem::canonical(iter_dir->path()).string();
-            parseFile(filename, substr);
+            parseFile(filename, substr, outpath);
         }
 
     }
     else if (!path.size() && boost::filesystem::is_regular_file(filename))
     {
-        parseFile(filename, substr);
+        parseFile(filename, substr, outpath);
     }
     else if (path.size())
     {
-        printf("%s has a problem", path);
+        printf("%s has a problem", path.c_str());
         showInputArgs(argv[0]);
         system("pause");
     }
     else if (filename.size())
     {
-        printf("%s has a problem", filename);
+        printf("%s has a problem", filename.c_str());
         showInputArgs(argv[0]);
         system("pause");
     }

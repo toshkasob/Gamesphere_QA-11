@@ -7,6 +7,12 @@ void showInputArgs(char* exe_name)
     printf("\t -f \"filepath\" \n");
     printf("\t --file \"filepath\" \n");
     printf("\t --dir \"path\" \n");
+    printf("and 2 types of options: \n");
+    printf("\t --substr=\"substr4parse\" \n");
+    printf("\t --outpath=\"path4parsedLines.log\" \n");
+
+    printf("[e.g.]: %s -f \"log.log\" --substr=\"Error\" --outpath=\"./\"\n", exe_name);
+
     printf(" \n \t***%s will be exit =)***\n", exe_name);
     printf(" \n \t***You can run me again =)***\n");
     system("pause");
