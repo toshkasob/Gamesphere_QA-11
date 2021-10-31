@@ -27,7 +27,7 @@ int main (int argc, char *argv[]) {
 
     std::string path ;
     std::string filename ;
-    std::string substr ;
+    std::string substr = "Error";
     std::string exe_name = argv[0];
     // Разбор аргументов запуска
     for (int i_arg = 1; i_arg < argc; i_arg++)
@@ -38,6 +38,7 @@ int main (int argc, char *argv[]) {
             switch (argv[i_arg][1]) 
             {
             case '-':
+            {
                 char * pch_eq;
                 unsigned int nch_eq = 0;
                 if (strcmp(&argv[i_arg][2], "dir") == NULL && argc >= i_arg + 1)
@@ -54,7 +55,9 @@ int main (int argc, char *argv[]) {
                 //} 
                 else if ((nch_eq = strspn(&argv[i_arg][2], "substr=")) == strlen("substr="))
                 {
-                    substr = argv[i_arg][2+nch_eq];
+                    substr.clear();
+                    substr = std::string(argv[i_arg]).substr(2+nch_eq);
+                    //substr = substr.substr(2+nch_eq);
                 } 
                 else
                 {
@@ -63,16 +66,22 @@ int main (int argc, char *argv[]) {
                 }
 
                 break;
+            }
             case 'f':
+            {
                 filename = argv[++i_arg];
                 break;
+            }
             //case 's':
             //    substr = argv[++i_arg];
             //    break;
             default:
+            {
                 printf("invalid single options =(\n");
                 showInputArgs(argv[0]);
                 break;
+            }
+
             }
             break;
         default:
@@ -92,13 +101,13 @@ int main (int argc, char *argv[]) {
             if (!boost::filesystem::is_regular_file(*iter_dir))
                 continue;
             filename = boost::filesystem::canonical(iter_dir->path()).string();
-            parseFile(filename);
+            parseFile(filename, substr);
         }
 
     }
     else if (!path.size() && boost::filesystem::is_regular_file(filename))
     {
-        parseFile(filename);
+        parseFile(filename, substr);
     }
     else if (path.size())
     {
