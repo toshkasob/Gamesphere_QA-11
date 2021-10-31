@@ -21,7 +21,7 @@ parseFile(const std::string& filename, const std::string& substr)
         while (pos_substr >= 0 && pos_substr <= cur_line.size()) {
             printf("[line %d, pos %d] %s\n", nLine, pos_substr, cur_line.c_str());
             pos_substr = cur_line.find(substr, pos_substr + 1);
-        
+        }
     }
     
     //pass
