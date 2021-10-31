@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# VS2012 version
+*vS2012/
+
 # User-specific files
 *.rsuser
 *.suo
