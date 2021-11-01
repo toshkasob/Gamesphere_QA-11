@@ -61,6 +61,10 @@ parseFile(const std::string& filename,
     fprintf(file4write, "[%s] End parsing %s\n", time4parsedLines.c_str(), filename.c_str());
     printf("\n[%s] End parsing %s\n", time4parsedLines.c_str(), filename.c_str());
 
+    fclose(file4write);
+    file4write = NULL;
+    fclose(file4read);
+    file4read = NULL;
     //pass
 }
 
