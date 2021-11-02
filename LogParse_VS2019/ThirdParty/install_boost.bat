@@ -5,6 +5,8 @@ SETLOCAL
 set BOOST_DIR=%1
 set PROJECT_DIR=%~dp0
 set CUR_DIR="%cd%"
+REM set URL_BOOST_HOMOSAPIENS="https://boostorg.jfrog.io/ui/native/main/release/1.71.0/source/"
+REM set URL_BOOST="https://boostorg.jfrog.io/native/main/release/1.71.0/source/boost_1_71_0.zip"
 IF "%BOOST_DIR%"=="" goto :show_args
 
 IF NOT "%2"=="" set PROJECT_DIR=%2
@@ -34,5 +36,6 @@ cd /D "%CUR_DIR%"
 set set BOOST_DIR=
 set PROJECT_DIR=
 set CUR_DIR=
+set URL_BOOST=
 
 echo End of batch program.
