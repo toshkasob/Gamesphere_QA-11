@@ -1,0 +1,6 @@
+## No Ignore exe as Debug
+
+# User-specific files
+![Dd]ebug/
+![Tt]hird[Pp]arty/
+*.*log

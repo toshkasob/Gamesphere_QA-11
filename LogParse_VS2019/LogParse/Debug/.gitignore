@@ -1,0 +1,5 @@
+## No Ignore exe as Debug
+
+# User-specific files
+!*.*
+*.*log
